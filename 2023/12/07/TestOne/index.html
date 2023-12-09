@@ -1,12 +1,22 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kongke">
+  <meta name="keywords" content="">
   
-  <title>TestOne | New World</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Dubbo 轻量级 Java RPC框架  RPC简单原理  Dubbo简单架构  一、安装与启动1. 安装注册中心zookeeper  一个树形目录服务，支持变更推送，适合作为Dubbo的注册中心   2. 安装Dubbo管理控制台进入GitHub下载压缩包 apache&#x2F;dubbo-admin 使用maven打包并运行   找到 pom文件所在目录  打开终端输入 12rem 跳过测">
+    <meta name="description" content="Dubbo 轻量级 Java RPC框架  RPC简单原理  Dubbo简单架构  一、安装与启动1. 安装注册中心zookeeper  一个树形目录服务，支持变更推送，适合作为Dubbo的注册中心   2. 安装Dubbo管理控制台进入GitHub下载压缩包 apache&#x2F;dubbo-admin 使用maven打包并运行   找到 pom文件所在目录  打开终端输入 12rem 跳过测">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TestOne">
 <meta property="og:url" content="https://kongke7.github.io/2023/12/07/TestOne/index.html">
@@ -31,100 +41,269 @@
 <meta property="article:published_time" content="2023-12-07T04:08:07.000Z">
 <meta property="article:modified_time" content="2023-12-07T04:09:09.652Z">
 <meta property="article:author" content="Kongke">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s2.loli.net/2023/11/02/wqmc4uvfhapKYJj.png">
   
-    <link rel="alternate" href="/atom.xml" title="New World" type="application/atom+xml">
   
   
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+  <title>TestOne - New World</title>
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kongke7.github.io","root":"/","version":"1.9.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
   
 <meta name="generator" content="Hexo 7.0.0"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">New World</a>
-      </h1>
-      
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TestOne"></span>
+          
+        </div>
+
         
-          <a class="main-nav-link" href="/">Home</a>
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-07 12:08" pubdate>
+          2023年12月7日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+          1.2k 字
         
-      </nav>
-      <nav id="sub-nav">
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
         
         
-          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://kongke7.github.io"></form>
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
       </div>
+
+      
     </div>
   </div>
-</header>
+</div>
 
-      <div class="outer">
-        <section id="main"><article id="post-TestOne" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/12/07/TestOne/" class="article-date">
-  <time class="dt-published" datetime="2023-12-07T04:08:07.000Z" itemprop="datePublished">2023-12-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      TestOne
-    </h1>
-  
+</div>
 
-      </header>
+  </header>
+
+  <main>
     
-    <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h1><blockquote>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">TestOne</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h1><blockquote>
 <p>轻量级 Java RPC框架</p>
 </blockquote>
 <p><strong>RPC简单原理</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/wqmc4uvfhapKYJj.png" alt="rpc"></p>
+<p><img src="https://s2.loli.net/2023/11/02/wqmc4uvfhapKYJj.png" srcset="/img/loading.gif" lazyload alt="rpc"></p>
 <p><strong>Dubbo简单架构</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/2pSwDBltfOQPXI7.png" alt="dubbo"></p>
+<p><img src="https://s2.loli.net/2023/11/02/2pSwDBltfOQPXI7.png" srcset="/img/loading.gif" lazyload alt="dubbo"></p>
 <h2 id="一、安装与启动"><a href="#一、安装与启动" class="headerlink" title="一、安装与启动"></a>一、安装与启动</h2><h3 id="1-安装注册中心"><a href="#1-安装注册中心" class="headerlink" title="1. 安装注册中心"></a>1. 安装注册中心</h3><p><strong>zookeeper</strong></p>
 <blockquote>
 <p>一个树形目录服务，支持变更推送，适合作为Dubbo的注册中心</p>
 </blockquote>
-<p><img src="https://s2.loli.net/2023/11/02/nCAO1FgZP86EWwa.png" alt="zookeeper"></p>
+<p><img src="https://s2.loli.net/2023/11/02/nCAO1FgZP86EWwa.png" srcset="/img/loading.gif" lazyload alt="zookeeper"></p>
 <h3 id="2-安装Dubbo管理控制台"><a href="#2-安装Dubbo管理控制台" class="headerlink" title="2. 安装Dubbo管理控制台"></a>2. 安装Dubbo管理控制台</h3><p><strong>进入GitHub下载压缩包</strong></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/apache/dubbo-admin">apache&#x2F;dubbo-admin</a></p>
 <p><strong>使用maven打包并运行</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/slpoiUdnGkVqKIj.png" alt="mvn"></p>
+<p><img src="https://s2.loli.net/2023/11/02/slpoiUdnGkVqKIj.png" srcset="/img/loading.gif" lazyload alt="mvn"></p>
 <ul>
 <li><p>找到 <code>pom</code>文件所在目录</p>
 <ul>
@@ -224,7 +403,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@EnableDubbo</span><br><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConsumerApplication</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(ConsumerApplication.class, args);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="二、配置"><a href="#二、配置" class="headerlink" title="二、配置"></a>二、配置</h2><p><strong>配置关系</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/ewDPxYU2JlNOy84.jpg" alt="conf"></p>
+<p><img src="https://s2.loli.net/2023/11/02/ewDPxYU2JlNOy84.jpg" srcset="/img/loading.gif" lazyload alt="conf"></p>
 <h3 id="1-启动检测"><a href="#1-启动检测" class="headerlink" title="1. 启动检测"></a>1. 启动检测</h3><blockquote>
 <p>spring 启动后会根据配置文件默认检查注册中心是否存在需要的服务，没有则报错</p>
 </blockquote>
@@ -249,7 +428,7 @@
 <li>消费者优先</li>
 </ul>
 </blockquote>
-<p><img src="https://s2.loli.net/2023/11/02/1HziMgd3Rk6nFw7.png" alt="timeout"></p>
+<p><img src="https://s2.loli.net/2023/11/02/1HziMgd3Rk6nFw7.png" srcset="/img/loading.gif" lazyload alt="timeout"></p>
 <p><strong>重试</strong></p>
 <blockquote>
 <p>超时失败后重试次数</p>
@@ -302,20 +481,20 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dubbo:reference</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userService&quot;</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">&quot;service.UserService&quot;</span> <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;1.0.0&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">stub</span>=<span class="hljs-string">&quot;service.UserServiceStub&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="三、高可用"><a href="#三、高可用" class="headerlink" title="三、高可用"></a>三、高可用</h2><h3 id="1-Zookeeper宕机与Dubbo直连"><a href="#1-Zookeeper宕机与Dubbo直连" class="headerlink" title="1. Zookeeper宕机与Dubbo直连"></a>1. Zookeeper宕机与Dubbo直连</h3><p><strong>Zookeeper宕机</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/IhZDl37r6mG4t29.png" alt="dj"></p>
+<p><img src="https://s2.loli.net/2023/11/02/IhZDl37r6mG4t29.png" srcset="/img/loading.gif" lazyload alt="dj"></p>
 <p><strong>Dubbo直连</strong></p>
 <ul>
 <li><p>绕过注册中心，直接连接远程服务</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OrderService</span> &#123;<br><br><span class="hljs-comment">// 	从注册中心远程引用</span><br><span class="hljs-comment">//    @DubboReference</span><br>  <span class="hljs-comment">// Dubbo 直连  </span><br>    <span class="hljs-meta">@DubboReference(url = &quot;127.0.0.1:20880&quot;)</span><br>    UserService userService;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> List&lt;User&gt; <span class="hljs-title function_">initOrder</span><span class="hljs-params">(String name)</span> &#123;<br>        List&lt;User&gt; list = userService.getUsers(<span class="hljs-string">&quot;AA&quot;</span>);<br>        <span class="hljs-keyword">return</span> list;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="2-集群模式下的负载均衡"><a href="#2-集群模式下的负载均衡" class="headerlink" title="2. 集群模式下的负载均衡"></a>2. 集群模式下的负载均衡</h3><p><strong>Random LoadBalance</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/NSLYuIabrPJyMiW.png" alt="rlb"></p>
+<p><img src="https://s2.loli.net/2023/11/02/NSLYuIabrPJyMiW.png" srcset="/img/loading.gif" lazyload alt="rlb"></p>
 <p><strong>RandomRobin LoadBalance</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/GSQRj5bovgN9JPA.png" alt="rrlb"></p>
+<p><img src="https://s2.loli.net/2023/11/02/GSQRj5bovgN9JPA.png" srcset="/img/loading.gif" lazyload alt="rrlb"></p>
 <p><strong>LeastActive LoadBalance</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/SiZAmBdcnQarPbJ.png" alt="lalb"></p>
+<p><img src="https://s2.loli.net/2023/11/02/SiZAmBdcnQarPbJ.png" srcset="/img/loading.gif" lazyload alt="lalb"></p>
 <p><strong>ConsistentHash LoadBalance</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/aQI5pidTjOlwSHy.png" alt="chlb"></p>
+<p><img src="https://s2.loli.net/2023/11/02/aQI5pidTjOlwSHy.png" srcset="/img/loading.gif" lazyload alt="chlb"></p>
 <p><strong>服务端服务级别</strong></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dubbo:service</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">&quot;...&quot;</span> <span class="hljs-attr">loadbalance</span>=<span class="hljs-string">&quot;roundrobin&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 
@@ -380,7 +559,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Service</span><br><span class="hljs-comment">// 暴露服务</span><br><span class="hljs-meta">@DubboService</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">UserService</span> &#123;<br><br>    <span class="hljs-meta">@HystrixCommand(fallbackMethod = &quot;hello&quot;)</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> List&lt;User&gt; <span class="hljs-title function_">getUsers</span><span class="hljs-params">(String name)</span> &#123;<br>        <span class="hljs-type">User</span> <span class="hljs-variable">aa</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(<span class="hljs-string">&quot;AA&quot;</span>, <span class="hljs-number">12</span>);<br>        <span class="hljs-type">User</span> <span class="hljs-variable">bb</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(<span class="hljs-string">&quot;BB&quot;</span>, <span class="hljs-number">12</span>);<br><br>        List&lt;User&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        list.add(aa);<br>        list.add(bb);<br>        <span class="hljs-keyword">return</span> list;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 出错时调用</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> List&lt;User&gt; <span class="hljs-title function_">hello</span><span class="hljs-params">(String name)</span> &#123;<br>        <span class="hljs-keyword">return</span> Arrays.asList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(<span class="hljs-string">&quot;CC&quot;</span>, <span class="hljs-number">12</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(<span class="hljs-string">&quot;DD&quot;</span>, <span class="hljs-number">12</span>));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="四、原理"><a href="#四、原理" class="headerlink" title="四、原理"></a>四、原理</h2><h3 id="1-RPC与Netty原理"><a href="#1-RPC与Netty原理" class="headerlink" title="1. RPC与Netty原理"></a>1. RPC与Netty原理</h3><p><strong>RPC</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/wqmc4uvfhapKYJj.png" alt="rpc"></p>
+<p><img src="https://s2.loli.net/2023/11/02/wqmc4uvfhapKYJj.png" srcset="/img/loading.gif" lazyload alt="rpc"></p>
 <p><strong>Netty</strong></p>
 <blockquote>
 <p>Netty是一个异步事件驱动的网络应用程序框架，用于快速开发可维护的高性能协议服务器和客户端。</p>
@@ -388,125 +567,346 @@
 </blockquote>
 <ul>
 <li><p><strong>NIO</strong></p>
-<p><img src="https://s2.loli.net/2023/11/02/Bj5vWaTx4KQze6g.png" alt="nio"></p>
+<p><img src="https://s2.loli.net/2023/11/02/Bj5vWaTx4KQze6g.png" srcset="/img/loading.gif" lazyload alt="nio"></p>
 </li>
 <li><p>netty则是基于nio框架</p>
-<p><img src="https://s2.loli.net/2023/11/02/m5U3ZBSQCqYdzAs.png" alt="netty"></p>
+<p><img src="https://s2.loli.net/2023/11/02/m5U3ZBSQCqYdzAs.png" srcset="/img/loading.gif" lazyload alt="netty"></p>
 </li>
 </ul>
-<h3 id="2-Dubbo框架"><a href="#2-Dubbo框架" class="headerlink" title="2. Dubbo框架"></a>2. Dubbo框架</h3><p><img src="https://s2.loli.net/2023/11/02/cCtzSHhNbUIsy7d.png" alt="kj"></p>
+<h3 id="2-Dubbo框架"><a href="#2-Dubbo框架" class="headerlink" title="2. Dubbo框架"></a>2. Dubbo框架</h3><p><img src="https://s2.loli.net/2023/11/02/cCtzSHhNbUIsy7d.png" srcset="/img/loading.gif" lazyload alt="kj"></p>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TestOne</div>
+      <div>https://kongke7.github.io/2023/12/07/TestOne/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Kongke</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
       
     </div>
-    <footer class="article-footer">
-      <a data-url="https://kongke7.github.io/2023/12/07/TestOne/" data-id="clpuoj73z0001f4dl8xy9fp48" data-title="TestOne" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2023/12/03/FirstOne/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">后一篇</strong>
-      <div class="article-nav-title">FirstOne</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a></li></ul>
-    </div>
+    <div class="license-icon iconfont"></div>
   </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/12/07/TestOne/">TestOne</a>
-          </li>
-        
-          <li>
-            <a href="/2023/12/03/FirstOne/">FirstOne</a>
-          </li>
-        
-          <li>
-            <a href="/2023/12/03/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
-        
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/03/FirstOne/" title="FirstOne">
+                        <span class="hidden-mobile">FirstOne</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2023 Kongke<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
-  </div>
-</footer>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
-    <nav id="mobile-nav">
+  </div>
+</div>
+
+
+
+
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
+
+
+
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+
+
+
   
-</nav>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
-<script src="/js/script.js"></script>
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-  </div>
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
