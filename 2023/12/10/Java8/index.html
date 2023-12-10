@@ -1,0 +1,954 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kongke">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Lambda表达式、Stream流、Optional类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java8-新特性">
+<meta property="og:url" content="https://kongke7.github.io/2023/12/10/Java8/index.html">
+<meta property="og:site_name" content="Kongke">
+<meta property="og:description" content="Lambda表达式、Stream流、Optional类">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kongke7.github.io/blogIndexImg/java8.png">
+<meta property="article:published_time" content="2023-12-10T08:29:46.000Z">
+<meta property="article:modified_time" content="2023-12-10T10:06:39.848Z">
+<meta property="article:author" content="Kongke">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kongke7.github.io/blogIndexImg/java8.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Java8-新特性 - Kongke</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kongke7.github.io","root":"/","version":"1.9.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Kongke</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java8-新特性"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-10 16:29" pubdate>
+          2023-12-10 16:29
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java8-新特性</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Java-8"><a href="#Java-8" class="headerlink" title="Java 8"></a>Java 8</h1><blockquote>
+<p>Java 8   的新特性</p>
+</blockquote>
+<h2 id="一、Lambda表达式"><a href="#一、Lambda表达式" class="headerlink" title="一、Lambda表达式"></a>一、Lambda表达式</h2><h3 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1. 基本语法"></a>1. 基本语法</h3><ul>
+<li><code>(参数) -&gt; &#123;方法体&#125;</code></li>
+<li><code>参数 -&gt; &#123;方法体&#125;</code>：当只有一个参数时，可以省略小括号</li>
+<li><code>(参数) -&gt; 方法体</code>：当方法体只有一条语句时，可以省略大括号</li>
+</ul>
+<blockquote>
+<ol>
+<li>无参无返回值</li>
+</ol>
+</blockquote>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 正常写法          </span><br><span class="hljs-type">Runnable</span> <span class="hljs-variable">run1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Runnable</span>() &#123;<br>              <span class="hljs-meta">@Override</span><br>              <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>                  System.out.println(<span class="hljs-string">&quot;AAA&quot;</span>);<br>              &#125;<br>          &#125;;<br>          <span class="hljs-comment">// lambda</span><br>          <span class="hljs-type">Runnable</span> <span class="hljs-variable">run2</span> <span class="hljs-operator">=</span> () -&gt; System.out.println(<span class="hljs-string">&quot;BBB&quot;</span>);<br></code></pre></td></tr></table></figure>
+<blockquote>
+<ol start="2">
+<li>一个参数 ， 无返回值</li>
+</ol>
+</blockquote>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 正常写法             </span><br>Consumer&lt;String&gt; con1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Consumer</span>&lt;String&gt;() &#123;<br>              <span class="hljs-meta">@Override</span><br>              <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">accept</span><span class="hljs-params">(String s)</span> &#123;<br>                  System.out.println(s);<br>              &#125;<br>          &#125;;<br>          <span class="hljs-comment">// lambda</span><br>          Consumer&lt;String&gt; con2 = (String s) -&gt; &#123;<br>              System.out.println(s);<br>          &#125;;<br>          <span class="hljs-comment">// 当方法体只有一条语句时，大括号可以省略，（有无返回值都一样）</span><br>          Consumer&lt;String&gt; con3 = (String s) -&gt; System.out.println(s);<br>          <span class="hljs-comment">// 参数类型可以省略   (类型推断)</span><br>          Consumer&lt;String&gt; con4 = (s) -&gt; System.out.println(s);<br>          <span class="hljs-comment">// 一个参数可以省略括号</span><br>          Consumer&lt;String&gt; con5 = s -&gt; System.out.println(s);<br></code></pre></td></tr></table></figure>
+<blockquote>
+<ol start="3">
+<li>有两个以上接口，并且有返回值，有多条语句</li>
+</ol>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 正常写法        </span><br>Comparator&lt;Integer&gt; com1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Comparator</span>&lt;Integer&gt;() &#123;<br>              <span class="hljs-meta">@Override</span><br>              <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">compare</span><span class="hljs-params">(Integer o1, Integer o2)</span> &#123;<br>                  System.out.println(<span class="hljs-string">&quot;两数比较&quot;</span>);<br>                  <span class="hljs-keyword">return</span> o1.compareTo(o2);<br>              &#125;<br>          &#125;;<br>          <span class="hljs-comment">// lambda</span><br>          <span class="hljs-comment">// 单条语句</span><br>          Comparator&lt;Integer&gt; com2 = (o1, o2) -&gt; o1.compareTo(o2);<br>          <span class="hljs-comment">// 多条语句</span><br>          Comparator&lt;Integer&gt; com3 = (o1, o2) -&gt; &#123;<br>              System.out.println(<span class="hljs-string">&quot;HHH&quot;</span>);<br>              <span class="hljs-keyword">return</span> o1.compareTo(o2);<br>          &#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-函数式接口"><a href="#2-函数式接口" class="headerlink" title="2. 函数式接口"></a>2. 函数式接口</h3><ul>
+<li><p><strong>Java四个基本函数式接口</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>抽象方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Consumer<T>  消费型</td>
+<td>void accept(T t)</td>
+</tr>
+<tr>
+<td>Predicate<T>    判定型</td>
+<td>boolean test(T t)</td>
+</tr>
+<tr>
+<td>Supplier<T>      供给型</td>
+<td>T get()</td>
+</tr>
+<tr>
+<td>Function&lt;T,R&gt;   函数型</td>
+<td>R apply(T t)</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>示例</p>
+<ul>
+<li><p><code>Consumer&lt;T&gt;</code> 消费型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">functionInterCons</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 正常写法</span><br>        cons(<span class="hljs-number">500.0</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Consumer</span>&lt;Double&gt;() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">accept</span><span class="hljs-params">(Double aDouble)</span> &#123;<br>                System.out.printf(<span class="hljs-string">&quot;消费%.2f元\n&quot;</span>, aDouble);<br>            &#125;<br>        &#125;);<br>        <span class="hljs-comment">//lambda</span><br>        cons(<span class="hljs-number">500.0</span>, money -&gt; System.out.printf(<span class="hljs-string">&quot;消费%.2f元\n&quot;</span>, money));<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cons</span><span class="hljs-params">(Double money, Consumer&lt;Double&gt; con)</span> &#123;<br>        con.accept(money);<br>    &#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>Predicate&lt;T&gt;</code> 判定型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">functionInterPre</span><span class="hljs-params">()</span> &#123;<br>        List&lt;String&gt; list = Arrays.asList(<span class="hljs-string">&quot;AA&quot;</span>, <span class="hljs-string">&quot;AB&quot;</span>, <span class="hljs-string">&quot;AC&quot;</span>, <span class="hljs-string">&quot;CC&quot;</span>);<br>        <span class="hljs-comment">// 正常写法</span><br>    	List&lt;String&gt; res = pres(list, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Predicate</span>&lt;String&gt;() &#123;<br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 判定条件</span><br><span class="hljs-comment">             */</span><br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">test</span><span class="hljs-params">(String s)</span> &#123;<br>                <span class="hljs-keyword">return</span> s.contains(<span class="hljs-string">&quot;A&quot;</span>);<br>            &#125;<br>        &#125;);<br>        <span class="hljs-comment">// lambda</span><br>        System.out.println(pres(list, s -&gt; s.contains(<span class="hljs-string">&quot;A&quot;</span>)));<br><br>        System.out.println(res);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> List&lt;String&gt; <span class="hljs-title function_">pres</span><span class="hljs-params">(List&lt;String&gt; list, Predicate&lt;String&gt; pre)</span>&#123;<br>        List&lt;String&gt; res = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (String s : list) &#123;<br>            <span class="hljs-comment">// pre中只有一个方法</span><br>            <span class="hljs-keyword">if</span> (pre.test(s)) &#123;<br>                res.add(s);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>Supplier&lt;T&gt;</code> 供给型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">functionInterSup</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 正常写法</span><br>    	supp(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Supplier</span>&lt;String&gt;() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> String <span class="hljs-title function_">get</span><span class="hljs-params">()</span> &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;str&quot;</span>;<br>            &#125;<br>        &#125;);<br>        <span class="hljs-comment">// lambda</span><br>        supp(() -&gt; <span class="hljs-string">&quot;str&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">supp</span><span class="hljs-params">(Supplier&lt;String&gt; sup)</span> &#123;<br>        System.out.println(sup.get());<br>    &#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>Function&lt;T,R&gt;</code> 函数型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">functionInterFunc</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 正常写法</span><br>    	func((<span class="hljs-type">byte</span>) <span class="hljs-number">127</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Function</span>&lt;Byte, Integer&gt;() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> Integer <span class="hljs-title function_">apply</span><span class="hljs-params">(Byte aByte)</span> &#123;<br>                <span class="hljs-keyword">return</span> aByte + <span class="hljs-number">1</span>;<br>            &#125;<br>        &#125;);<br>        <span class="hljs-comment">// lambda</span><br>        func((<span class="hljs-type">byte</span>) -<span class="hljs-number">128</span>, b -&gt; b - <span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">func</span><span class="hljs-params">(Byte bytes, Function&lt;Byte, Integer&gt; func)</span> &#123;<br>        System.out.println(func.apply(bytes));<br>    &#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-方法引用"><a href="#3-方法引用" class="headerlink" title="3. 方法引用"></a>3. 方法引用</h3><blockquote>
+<p>实现的方法需要与抽象方法参数类型及返回值类型一致</p>
+</blockquote>
+<ul>
+<li><p>使用格式：<code>类(或对象) :: 方法名</code></p>
+<ul>
+<li><p><code>类 :: 静态方法名</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Java">Supplier&lt;Long&gt; sup2 = System::currentTimeMillis;<br>      System.out.println(sup2.get());<br>      <span class="hljs-comment">// Comparator&lt;T&gt; int compare(T t1 , T t2)</span><br>      Comparator&lt;Integer&gt; com1 = (o1, o2) -&gt; Integer.compare(o1, o2);<br>      Comparator&lt;Integer&gt; com2 = Integer::compare;<br>com1.compare(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>类 :: 非静态方法名</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// BiPredicate&lt;T,T&gt; boolean test(T t1, T t2)</span><br>      BiPredicate&lt;String, String&gt; bip = (s1, s2) -&gt; s1.equals(s2);<br>      <span class="hljs-comment">// String boolean s1.equals(s2)</span><br>      BiPredicate&lt;String, String&gt; bip2 = String::equals;<br>bip.test(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>对象 :: 非静态方法名</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Java">Consumer&lt;String&gt; cons = s -&gt; System.out.println(s);<br>      <span class="hljs-type">PrintStream</span> <span class="hljs-variable">ps</span> <span class="hljs-operator">=</span> System.out;<br>      cons = ps::println;<br>cons.accept(<span class="hljs-string">&quot;str&quot;</span>);<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="4-构造器引用"><a href="#4-构造器引用" class="headerlink" title="4. 构造器引用"></a>4. 构造器引用</h3><blockquote>
+<p>需要与抽象方法参数类型及返回值类型一致<br>需要实体类中存在对应的有参构造器</p>
+</blockquote>
+<ul>
+<li><p><strong>无参</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Java">Supplier&lt;Book&gt; sup = () -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">Book</span>();<br>Supplier&lt;Book&gt; sup2 = Book::<span class="hljs-keyword">new</span>;<br><br><span class="hljs-type">Book</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> sup.get();<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>有参</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java">Function&lt;String, Book&gt; func1 = s -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">Book</span>(s);<br>Function&lt;String, Book&gt; func2 = Book::<span class="hljs-keyword">new</span>;<br><br><span class="hljs-type">Book</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> func1.apply(<span class="hljs-string">&quot;A&quot;</span>);<br><span class="hljs-type">Book</span> <span class="hljs-variable">b1</span> <span class="hljs-operator">=</span> func2.apply(<span class="hljs-string">&quot;B&quot;</span>);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>多参</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java">BiFunction&lt;String, Integer, Book&gt; bf1 = (s, i) -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">Book</span>(s, i);<br>BiFunction&lt;String, Integer, Book&gt; bf2 = Book::<span class="hljs-keyword">new</span>;<br><br><span class="hljs-type">Book</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> bf1.apply(<span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-number">10</span>);<br><span class="hljs-type">Book</span> <span class="hljs-variable">b1</span> <span class="hljs-operator">=</span> bf2.apply(<span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="5-数组引用"><a href="#5-数组引用" class="headerlink" title="5. 数组引用"></a>5. 数组引用</h3><blockquote>
+<p>将数组看成一个对象 ， 与构造器引用类似</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java">Function&lt;Integer, String[]&gt; fun1 = len -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[len];<br>Function&lt;Integer, String[]&gt; fun2 = String[]::<span class="hljs-keyword">new</span>;<br><br>String[] arr = fun1.apply(<span class="hljs-number">5</span>);<br>String[] arr1 = fun2.apply(<span class="hljs-number">5</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="二、Stream-API"><a href="#二、Stream-API" class="headerlink" title="二、Stream API"></a>二、Stream API</h2><blockquote>
+<p>Stream流获取操作对象，不改变原对象的值</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>顺序流</td>
+<td>Stream<T>  stream()</td>
+</tr>
+<tr>
+<td>并行流</td>
+<td>Stream<T>  parallelStream()</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">        List&lt;Book&gt; books = Book.getBooks(<span class="hljs-number">10</span>);<br><span class="hljs-comment">//        default Stream&lt;T&gt; stream() 顺序流</span><br>        Stream&lt;Book&gt; stream = books.stream();<br><span class="hljs-comment">//        default Stream&lt;T&gt; parallelStream() 并行流</span><br>        Stream&lt;Book&gt; praStream = books.parallelStream();<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-获取流"><a href="#1-获取流" class="headerlink" title="1. 获取流"></a>1. 获取流</h3><ul>
+<li><p>集合获取流</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Java">        List&lt;Book&gt; books = Book.getBooks(<span class="hljs-number">10</span>);<br><span class="hljs-comment">//        default Stream&lt;T&gt; stream() 顺序流</span><br>        Stream&lt;Book&gt; stream = books.stream();<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>数组获取流</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java"> 		<span class="hljs-type">int</span>[] arr = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;;<br>        <span class="hljs-type">IntStream</span> <span class="hljs-variable">intStream</span> <span class="hljs-operator">=</span> Arrays.stream(arr);<br><span class="hljs-comment">//      支持泛型</span><br>        Book[] bookArr = &#123;<span class="hljs-keyword">new</span> <span class="hljs-title class_">Book</span>(<span class="hljs-string">&quot;a&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Book</span>(<span class="hljs-string">&quot;b&quot;</span>)&#125;;<br>        Stream&lt;Book&gt; bookStream = Arrays.stream(bookArr);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Stream.of() 创建</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">Stream&lt;Integer&gt; integerStream = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>Stream&lt;Book&gt; bookStream1 = Stream.of(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Book</span>());<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>无限流</p>
+<ul>
+<li><p>迭代</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">//  public static&lt;T&gt; Stream&lt;T&gt; </span><br><span class="hljs-comment">//	iterate(final T seed, final UnaryOperator&lt;T&gt; f)</span><br>Stream.iterate(<span class="hljs-number">0</span>, t -&gt; t + <span class="hljs-number">2</span>)<br>    .limit(<span class="hljs-number">10</span>).forEach(System.out::println);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>生成</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// public static&lt;T&gt; Stream&lt;T&gt; generate(Supplier&lt;T&gt; S)     </span><br>Stream.generate(Math::random)<br>    .limit(<span class="hljs-number">5</span>).forEach(System.out::println);<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-中间操作"><a href="#2-中间操作" class="headerlink" title="2. 中间操作"></a>2. 中间操作</h3><ul>
+<li><p><strong>过滤</strong>   <code>filter&lt;P&gt;</code></p>
+<blockquote>
+<p>根据过滤器中的 Predicate 过滤</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// Stream&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate)</span><br>Stream&lt;Book&gt; bookStream = books.stream();<br><span class="hljs-comment">// filter 过滤价格大于50的书📕</span><br>bookStream.filter(b -&gt; b.getPrice() &gt; <span class="hljs-number">50</span>).forEach(System.out::println);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>截断</strong>   <code>limit(n)</code></p>
+<blockquote>
+<p>截取流中前 n 个数据</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Java">books.stream().limit(<span class="hljs-number">5</span>).forEach(books1::add);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>跳过</strong>   <code>skip(n)</code></p>
+<blockquote>
+<p>跳过前 n 个数据</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Java">books.stream().skip(<span class="hljs-number">5</span>).forEach(System.out::println);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>筛选</strong>   <code>distinct()</code></p>
+<blockquote>
+<p>通过流产生的 hashCode 和 equals 去除重复元素</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Java">books.stream().distinct().forEach(System.out::println);<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>Map映射操作</strong></p>
+<ul>
+<li><p><code>map(Function f)</code></p>
+<blockquote>
+<p>接收一个函数作为参数，这个函数会作用到每一个元素上，并映射成为一个新的元素</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 将小写字母映射为大写返回</span><br>List&lt;String&gt; list = Arrays.asList(<span class="hljs-string">&quot;aa&quot;</span>, <span class="hljs-string">&quot;bb&quot;</span>, <span class="hljs-string">&quot;cc&quot;</span>);<br>String[] arr = &#123;<span class="hljs-string">&quot;aa&quot;</span>, <span class="hljs-string">&quot;bb&quot;</span>, <span class="hljs-string">&quot;cc&quot;</span>&#125;;<br><span class="hljs-comment">// 列表</span><br>list.stream().map(String::toUpperCase).forEach(System.out::println);<br><span class="hljs-comment">// 数组</span><br>Arrays.stream(arr).map(String::toUpperCase).forEach(System.out::println);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>获取Books中价格大于30的书</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Java">books.stream()<br>    .map(Book::getPrice)<br>    .filter(s -&gt; s &gt; <span class="hljs-number">30</span>)<br>    .forEach(System.out::println);<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>flatMap(Function f)</code></p>
+<blockquote>
+<p>接收一个函数作为参数，将流中的每一个值都转换成一个流，最后将所有的流合成一个流</p>
+</blockquote>
+<ul>
+<li><p>将 <code>[[a,a],[b,b],[c,c]] </code>  变成  <code> [a,a,b,b,c,c]</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// 本类为 StreamA</span><br><span class="hljs-comment">// list = Arrays.asList(&quot;aa&quot;, &quot;bb&quot;, &quot;cc&quot;);</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 将字符串转化为流</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Stream&lt;Character&gt; <span class="hljs-title function_">strToStream</span><span class="hljs-params">(String str)</span> &#123;<br>   List&lt;Character&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>   <span class="hljs-keyword">for</span> (Character c : str.toCharArray()) &#123;<br>       list.add(c);<br>   &#125;<br>   <span class="hljs-keyword">return</span> list.stream();<br>&#125;<br><br><span class="hljs-comment">// 使用普通map 返回值类型为流的集合</span><br>Stream&lt;Stream&lt;Character&gt;&gt; streamStream = <br>    list.stream().map(StreamA::strToStream);<br>    <span class="hljs-comment">// 遍历每个流中的每一个元素</span><br>streamStream.forEach(s -&gt; &#123;<br>   s.forEach(System.out::println);<br>&#125;);<br><br><span class="hljs-comment">//使用flatMap 返回的类型为一个流</span><br>Stream&lt;Character&gt; characterStream = <br>    list.stream().flatMap(StreamA::strToStream);<br><br>characterStream.forEach(System.out::println);<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p><strong>Sorted排序操作</strong></p>
+<ul>
+<li><p><code>sorted()</code>  自然排序 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Java">List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">12</span>, <span class="hljs-number">43</span>, <span class="hljs-number">65</span>, <span class="hljs-number">34</span>, <span class="hljs-number">87</span>, <span class="hljs-number">99</span>, <span class="hljs-number">23</span>, <span class="hljs-number">11</span>);<br><span class="hljs-comment">// (默认从小到大)</span><br>list.stream().sorted().forEach(System.out::println);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>sorted(Comparator com)</code>   自定义排序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Book&gt; books = Book.getBooks(<span class="hljs-number">10</span>);<br>books.stream()<br>    .sorted(Comparator.comparingInt(Book::getPrice))<br>    .forEach(System.out::println);<br><span class="hljs-comment">// 加上 - 号 表示改变顺序</span><br>books.stream()<br>    .sorted((b1,b2) -&gt; - Integer.compare(b1.getPrice(), b2.getPrice()))<br>    .forEach(System.out::println);<br><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-终止操作"><a href="#3-终止操作" class="headerlink" title="3. 终止操作"></a>3. 终止操作</h3><blockquote>
+<p>操作结束后会关闭流</p>
+</blockquote>
+<p><strong>基本常见操作</strong></p>
+<ul>
+<li><p><code>forEach(Consumer con)</code>  将元素遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">list.stream().forEach(System.out::println);<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+<li><p><code>allMatch(Predicate p)</code>   检查是否匹配所有元素</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">books.stream().allMatch(b -&gt; b.getPrice() &lt; <span class="hljs-number">50</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+<li><p><code>anyMatch(Predicate p)</code>   检查是否至少匹配一个元素</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">books.stream().anyMatch(b -&gt; b.getPrice() &gt; <span class="hljs-number">50</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+<li><p><code>noneMatch(Predicate p)</code> 检查是否 没有匹配的元素</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">books.stream().noneMatch(b -&gt; b.getName().startsWith(<span class="hljs-string">&quot;a&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+<li><p><code>findFirst()</code>  取流中的第一个元素</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">Optional&lt;Book&gt; first = books.stream().findFirst();<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+<li><p><code>findAny()</code>   取流中的任意一个元素</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Java">Optional&lt;Book&gt; any = books.parallelStream().findAny();<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>计数操作</strong></p>
+<ul>
+<li><p><code>count()</code>    返回流中集合个数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">long</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> books.stream().filter(b -&gt; b.getPrice() &gt; <span class="hljs-number">50</span>).count();<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><code>max(Comparator c)</code>   返回流中的最大值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Java">Stream&lt;Integer&gt; priceStream = books.stream().map(Book::getPrice);<br>Optional&lt;Integer&gt; max = priceStream.max(Integer::compare);<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><code>min(Comparator c)</code>   返回流中的最小值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Java">Optional&lt;Integer&gt; min = books.stream()<br>    .map(Book::getPrice).min(Integer::compareTo);<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>归约操作</strong></p>
+<blockquote>
+<p>将流中的集合反复结合起来，得到一个值</p>
+</blockquote>
+<ul>
+<li><p><code>reduce(T identity , BinaryOperator bo)</code>  得到一个值，返回 <code>T</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Integer</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> list.stream().reduce(<span class="hljs-number">0</span>, (i, j) -&gt; i + j);<br><span class="hljs-comment">// 或</span><br><span class="hljs-type">Integer</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> list.stream().reduce(<span class="hljs-number">0</span>, Integer::sum);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>reduce(BinaryOperator bo)</code>  得到一个值，返回 <code>Optional&lt;T&gt;</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Java">Optional&lt;Integer&gt; sumPrice = books.stream()<br>    .map(Book::getPrice).reduce(Integer::sum);<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>收集操作</strong></p>
+<blockquote>
+<p>将流中的元素转化为其他形式，接收一个Collector接口的实现，用于对流中的对象进行汇总</p>
+</blockquote>
+<ul>
+<li><p><code>collect(Collector c)</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Book&gt; collect = <br>    books.stream()<br>    .filter(b -&gt; b.getPrice() &gt; <span class="hljs-number">50</span>)<br>    .collect(Collectors.toList());<br><span class="hljs-comment">// 或</span><br>List&lt;Book&gt; collect2 = <br>    books.stream()<br>    .filter(b -&gt; b.getPrice() &gt; <span class="hljs-number">50</span>)<br>    .collect(Collectors.toCollection(ArrayList&lt;Book&gt;::<span class="hljs-keyword">new</span>));<br></code></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 常见：</span><br>Collectors.toList() <br>Collectors.toSet() <br>Collectors.toCollection(Supplier s)<br></code></pre></td></tr></table></figure>
+
+<h2 id="三、Optional-类"><a href="#三、Optional-类" class="headerlink" title="三、Optional 类"></a>三、Optional 类</h2><blockquote>
+<p>用来预防空指针</p>
+<p>就能不用显示进行空指针检测</p>
+</blockquote>
+<h3 id="1-创建实例"><a href="#1-创建实例" class="headerlink" title="1. 创建实例"></a>1. 创建实例</h3><ul>
+<li><p><code>Optional.of(T t)</code>   创建一个 Optional实例 ， t  必须非空</p>
+</li>
+<li><p><code>Optional.empty()</code>  创建一个空的Optional 实例</p>
+</li>
+<li><p><code>Optional.ofNullable(T t)</code>  创建一个 Optional实例 ， t 可以为空</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">createOptional</span><span class="hljs-params">()</span>&#123;<br>   <span class="hljs-type">Library</span> <span class="hljs-variable">lib</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Library</span>();<br><span class="hljs-comment">// lib = null;</span><br><span class="hljs-comment">// 如 lib = null 会报错 空指针 因为of中的示例不能为空</span><br>   Optional&lt;Library&gt; olib = Optional.of(lib);<br><br><span class="hljs-comment">// empty() 创建一个空的Optional 实例</span><br>   Optional&lt;Object&gt; empty = Optional.empty();<br>   System.out.println(empty);<br><br><span class="hljs-comment">//  ofNullable(T t) 创建一个 Optional实例 ， t可以为空</span><br>    Optional&lt;Library&gt; olib1 = Optional.ofNullable(lib);<br><br>    System.out.println(olib1);<br><br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-获取容器中的对象"><a href="#2-获取容器中的对象" class="headerlink" title="2. 获取容器中的对象"></a>2. 获取容器中的对象</h3><ul>
+<li><code>T get()</code> 调用的容器中有对象，不能为空</li>
+<li><code>T orElse(T other)</code> 如果容器中有对象则返回 ， 没有则返回指定的 other对象</li>
+<li><code>boolean isPresent()</code> 是否包含对象</li>
+</ul>
+<h3 id="3-预防空指针"><a href="#3-预防空指针" class="headerlink" title="3. 预防空指针"></a>3. 预防空指针</h3><p><strong>例 ：获取书名预防空指针异常</strong></p>
+<ul>
+<li><p>在 <code>Optional </code>以前防止空指针</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 获取书籍名称</span><br><span class="hljs-comment"> * 在Optional以前防止空指针</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">getBookName</span><span class="hljs-params">(Library lib)</span>&#123;<br>    <span class="hljs-keyword">if</span> (lib != <span class="hljs-literal">null</span>)&#123;<br>    	<span class="hljs-keyword">if</span> (lib.getBook() != <span class="hljs-literal">null</span>)&#123;<br>    		<span class="hljs-keyword">return</span> lib.getBook().getName();<br>    	&#125;<br>     &#125;<br>     <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>Optional </code>防止空指针</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> String <span class="hljs-title function_">getBookNameOp</span><span class="hljs-params">(Library lib)</span>&#123;<br><br>    Optional&lt;Library&gt; libo = Optional.ofNullable(lib);<br>    <span class="hljs-comment">// 这里解决 lib == null</span><br>    <span class="hljs-comment">// 如果 lib == null 则返回书名为 AA</span><br>    <span class="hljs-type">Library</span> <span class="hljs-variable">lib1</span> <span class="hljs-operator">=</span> libo.orElse(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Library</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Book</span>(<span class="hljs-string">&quot;AA&quot;</span>)));<br><br><span class="hljs-comment">//  此时lib1不为空</span><br><br>    <span class="hljs-type">Book</span> <span class="hljs-variable">book1</span> <span class="hljs-operator">=</span> lib1.getBook();<br><br>    Optional&lt;Book&gt; booko = Optional.ofNullable(book1);<br>    <span class="hljs-comment">// 这里解决 lib.getBook() == null</span><br>    <span class="hljs-comment">// 如果 lib != null 且 lib.book == null 则返回书名为 BB</span><br>    <span class="hljs-type">Book</span> <span class="hljs-variable">book</span> <span class="hljs-operator">=</span> booko.orElse(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Book</span>(<span class="hljs-string">&quot;BB&quot;</span>));<br><br><span class="hljs-comment">//  此时book不为空</span><br>    <span class="hljs-keyword">return</span> book.getName();<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java8-新特性</div>
+      <div>https://kongke7.github.io/2023/12/10/Java8/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Kongke</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="正则表达式">
+                        <span class="hidden-mobile">正则表达式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      ©2023 Kongke
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
