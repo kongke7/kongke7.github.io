@@ -1,0 +1,942 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kongke">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="DDD与业务场景分层建模思考">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDD理解与思考">
+<meta property="og:url" content="https://kongke7.github.io/2024/08/09/DDD%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%9D%E8%80%83/index.html">
+<meta property="og:site_name" content="Kongke">
+<meta property="og:description" content="DDD与业务场景分层建模思考">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kongke7.github.io/blogIndexImg/DDD.png">
+<meta property="article:published_time" content="2024-08-09T12:01:45.000Z">
+<meta property="article:modified_time" content="2025-03-21T11:17:49.715Z">
+<meta property="article:author" content="Kongke">
+<meta property="article:tag" content="架构">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kongke7.github.io/blogIndexImg/DDD.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>DDD理解与思考 - Kongke</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kongke7.github.io","root":"/","version":"1.9.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <h2  style="font-family: 华文隶书;">Kongke</h2>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/kongke7/kongke7.github.io" target="_self">
+                <i class="iconfont icon-github-fill"></i>
+                <span>GitHub</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="DDD理解与思考"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-09 20:01" pubdate>
+          2024-08-09 20:01
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          42 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">DDD理解与思考</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="DDD与业务场景分层建模思考"><a href="#DDD与业务场景分层建模思考" class="headerlink" title="DDD与业务场景分层建模思考"></a>DDD与业务场景分层建模思考</h1><blockquote>
+<p>本文会围绕DDD领域驱动设计，对于实际业务场景分层建模的应用进行介绍</p>
+</blockquote>
+<h2 id="何为DDD"><a href="#何为DDD" class="headerlink" title="何为DDD"></a>何为DDD</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>DDD是领域驱动设计的简称（Domain Driven Design），他是用来解决复杂软件系统设计的一套建模思想，旨在将复杂系统拆分的分治思想。以业务范围为中心，将不同业务划分为不同领域模型，自顶向下的进行系统的解耦；</p>
+<p>对于整个系统，其每一部分业务都是不断变化的，而将业务抽象为领域模型能更好的进行业务的拓展和升级，也能更安全的控制每个业务域的稳定性。对于具体某个业务域，又能将其更加细致的分为多个子域，每个子域又能维护本身的各个实体与边界。所以DDD也是更深层次的面对对象的思想。</p>
+<p>综上，DDD的核心思想有：</p>
+<ul>
+<li><p>领域</p>
+<p>将某个业务的所有业务相关的规则，定义等抽象成一个整体的概念；例如电商系统中，用户下单相关的业务场景就能划分为订单域，支付的业务场景可以划分为交易域，售后服务相关的能划分为客服域。</p>
+</li>
+<li><p>分治</p>
+<p>将一个大的系统通过业务场景的不同划分为不同的领域，每个领域单独治理维护，将复杂的系统结构分解成更小的一个个业务单元，能够更好的进行业务功能的迭代升级与维护，也极大的降低了系统的耦合。</p>
+</li>
+</ul>
+<h3 id="DDD与MVC"><a href="#DDD与MVC" class="headerlink" title="DDD与MVC"></a>DDD与MVC</h3><img src="https://s2.loli.net/2024/07/30/2NBuTzXS9sIK5ga.jpg" srcset="/img/loading.gif" lazyload alt="mvc" style="zoom: 67%;" />
+
+
+
+<p>经典的MVC模式中，将应用分为三层，Controller层负责业务逻辑的处理，Model负责与数据库持久层的数据模型，View负责网页端数据的展示。可以看出MVC模式各个模块之间有着清晰的责任属性，对于业务简单的系统可以有很高的效率。但当业务内容的增多，业务场景 的多样化，MVC模式会愈发臃肿，各个功能模块之间相互调用错综复杂，大大增加的系统的维护难度，影响整个系统的稳定性。</p>
+<p>由此，可以清晰的看出DDD模式对于复杂系统的优势</p>
+<ul>
+<li><p>系统解耦，降低系统的复杂度</p>
+<p>DDD将系统以业务范围进行划分，每个业务域有严格的边界，避免了不同业务域之间互相影响</p>
+</li>
+<li><p>分治思想，业务域独立维护</p>
+<p>将业务行为与数据结合，每个业务域只需着重于本域的业务功能实现</p>
+</li>
+<li><p>便于拓展，使系统能够稳定发展</p>
+<p>业务功能模块化组成，新增业务场景只需增加新的业务域模块，不会影响整个系统原有的功能模块</p>
+</li>
+<li><p>提高代码复用，增强隔离性</p>
+<p>一些通用的业务域可以为其他的业务域提供统一的服务，并且拥有较强的隔离性</p>
+</li>
+</ul>
+<h2 id="DDD的知识体系"><a href="#DDD的知识体系" class="headerlink" title="DDD的知识体系"></a>DDD的知识体系</h2><blockquote>
+<p>DDD的设计大体可以分为战略设计和战术设计</p>
+</blockquote>
+<img src="https://s2.loli.net/2024/07/30/CpWkvgM6xlojU3Q.jpg" srcset="/img/loading.gif" lazyload alt="zlzs" style="zoom: 50%;" />
+
+<h3 id="战略设计"><a href="#战略设计" class="headerlink" title="战略设计"></a>战略设计</h3><blockquote>
+<p>战略设计又叫战略建模，是将业务拆分建模的过程</p>
+</blockquote>
+<p>从业务视角出发，对业务需求进行拆分，划分子域，限界上下文，通过领域语言进行领域划分以及构建领域模型。并在构建领域模型时梳理出业务对应的聚合、实体、以及值对象</p>
+<p>主要概念有：通用语言、领域、子域、界限上下文</p>
+<p><strong>通用语言</strong></p>
+<blockquote>
+<p>定义上下文的主要含义，具体域的主要业务内容，团队达成共识的，能清晰准确地描述业务含义和规则</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2024/08/08/V6NQBDYOfr3EgAx.webp" srcset="/img/loading.gif" lazyload alt="unionLang"></p>
+<p>通用语言贯穿 DDD 的整个设计过程，作为项目团队沟通和协商形成的统一语言，这里的团队不仅为技术团队，也包含业务、运营、产品等，通用语言必须要限定在某个上下文内，以确保每个上下文含义在它特定的边界内都有唯一的含义</p>
+<p><strong>领域</strong></p>
+<blockquote>
+<p>领域是值业务的特定范围，涉及业务的规则、概念、流程等，是对业务问题分解组织的基本单位</p>
+</blockquote>
+<img src="https://s2.loli.net/2024/08/08/CeaGEHSfOKPoks6.webp" srcset="/img/loading.gif" lazyload alt="lingyu" style="zoom: 50%;" />
+
+<p>DDD会将大的业务问题，根据业务概念进行划分，而领域则是划分的特定范围内的业务模型</p>
+<p><strong>子域</strong></p>
+<blockquote>
+<p>子域则是领域内，根据具体的业务规则和功能需求划分的更小的一个独立的 业务&#x2F;功能 模块</p>
+</blockquote>
+<p>子域主要是将大的系统分解化简，降低整个系统的复杂度以及耦合</p>
+<p>子域又分为：</p>
+<ul>
+<li>核心域：主要的业务功能</li>
+<li>通用域：与业务功能无关的通用功能，能够被多个子域共享，包含一些通用的服务，工具等</li>
+<li>支撑域：主要为核心域的功能实现提供定制化的功能服务辅助，对于核心业务起到重要作用，与核心业务具有强相关性</li>
+</ul>
+<p><strong>界限上下文</strong></p>
+<blockquote>
+<p>界限用于划分和隔离不同领域，是领域的边界，而上下文则是领域的语言环境</p>
+</blockquote>
+<p>用来封装通用语言和领域对象，提供上下文环境。这个边界定义了模型的适用范围，每个上下文内部有自己的语言和模型，他们之间通过明确定义好的接口进行通信（RPC，HTTP，MQ等方式）</p>
+<hr>
+<h3 id="战术设计"><a href="#战术设计" class="headerlink" title="战术设计"></a>战术设计</h3><blockquote>
+<p>具体的功能逻辑的设计与实现</p>
+</blockquote>
+<p>战术设计也称为战术建模，从技术视角出发，以领域模型基础，进行微服务拆分，在每个微服务中进行领域分层，实现领域服务，从而实现领域模型对于代码映射目的，最终实现DDD的落地实。</p>
+<p>主要概念：实体、值对象、聚合、聚合根、资源库、领域服务、领域事件</p>
+<img src="https://s2.loli.net/2024/08/08/kP6gFREpMmZz4fy.webp" srcset="/img/loading.gif" lazyload alt="zhanshu" style="zoom:50%;" />
+
+
+
+<p><strong>实体（Entity）</strong></p>
+<blockquote>
+<p>有唯一的身份表示和生命周期的对象，有自己的行为状态</p>
+</blockquote>
+<p>与传统数据模型设计优先不同，DDD 是先构建领域模型，针对实际业务场景构建实体对象和行为，再将实体对象映射到数据持久化对象</p>
+<p>实体在聚合中唯一，且生命周期由聚合根管理，且实体一般会持久化，于数据持久化对象有着一对多，多对多的关系</p>
+<p>实体常见的展现形式有：</p>
+<ul>
+<li><p>贫血模型</p>
+<p>指实体对象内只具有数据属性，而缺乏业务逻辑的行为方法。其业务逻辑主要存在于服务层和其他外部对象中，实体对象仅为被动的数据容器。这种模型有悖于DDD的设计思想，其无法体现领域的概念于规则，常见于MVC的设计中</p>
+</li>
+<li><p>充血模型</p>
+<p>指实体对象内充分包含了业务逻辑的行为方法，其明确的表示出了数据和行为逻辑的关系，能更好的封装与实体对象相关的业务规则和方法，并且提供统一的接口。这种模式是DDD设计思想的体现，能使得实体对象成为业务规则的中心</p>
+</li>
+</ul>
+<p>关于两种模型的选择，没有确切的答案，充血模型虽然更加体现DDD的思想，但如果只使用充血模型。则一些复杂的业务操作也会包含在实体中，使得实体愈发臃肿，且在团队开发中，对于哪些功能下放到服务层，哪些功能保留在实体中无法有明确的定义。而只使用贫血模型则又会使实体显得单薄，无法更好的维护自身的业务功能。一般看来，实际开发中常会使用 贫血+充血模型的组合模式，将复杂的以及于其他实体交互多的方法下放到服务层实现，而实体保留一部分功能单独维护。</p>
+<p>总而言之，模型没有好坏，好的设计需要团队共同探讨实现，并且要适合于实际的业务场景</p>
+<p><strong>值对象</strong></p>
+<blockquote>
+<p>没有唯一表示的对象，通过自身属性的值来判断相等性，是多个相关属性组成的一个数据整体</p>
+</blockquote>
+<p>值对象只是若干个属性的集合，只有数据初始化操作和有限的不涉及修改数据的行为，基本不包含业务逻辑。值对象的属性集虽然在物理上独立出来了，但在逻辑上它仍然是实体属性的一部分，用于描述实体的特征</p>
+<p>实体和值对象是微服务底层的最基础的对象，一起实现实体最基本的核心领域逻辑。值对象和实体在某些场景下可以互换，值对象在某些场景下有很好的价值，但是并不是所有的场景都适合值对象。</p>
+<p>DDD 提倡从领域模型设计出发，而不是先设计数据模型。传统的数据模型设计通常是一个表对应一个实体，一个主表关联多个从表，当实体表太多的时候就很容易陷入复杂的数据库设计，领域模型就容易被数据模型绑架。值对象的诞生，在一定程度上，和实体是互补的。</p>
+<p><strong>聚合</strong></p>
+<blockquote>
+<p>一组相关对象的集合，由一个根实体作为入口，管理内部对象的生命周期和完整性</p>
+</blockquote>
+<p>领域模型内的实体和值对象就好比个体，而能让实体和值对象协同工作的组织就是聚合，它用来确保这些领域对象在实现共同的业务逻辑时，能保证数据的一致性</p>
+<p>聚合是数据修改和持久化的基本单元，每一个聚合对应一个仓储，实现数据的持久化</p>
+<p>聚合实现了微服务的重要特征：高内聚，低耦合</p>
+<ul>
+<li>聚合有一个聚合根和上下文边界，这个边界根据业务单一职责和高内聚原则，定义了聚合内部应该包含哪些实体和值对象，而聚合之间的边界是松耦合的。</li>
+<li>聚合是微服务内的逻辑边界，便于微服务以聚合为单位的拆分和组合</li>
+<li>聚合可以是一个单独的微服务，也可以由多个聚合组成一个微服务</li>
+</ul>
+<p><strong>聚合根</strong></p>
+<blockquote>
+<p>是聚合的实体根，和入口点，管理着聚合内其他对象的生命周期和完整性，通过封装聚合内的对象定义了聚合的一致性边界</p>
+</blockquote>
+<p>聚合根则是组织的负责人，聚合根也叫做根实体，它不仅仅是实体，还是实体的管理者，在聚合内部，负责协调实体和值对象按照固定的业务规则协同完成共同的业务逻辑。避免由于复杂数据模型缺少统一的业务规则控制，而导致聚合、实体之间数据不一致性的问题。</p>
+<ul>
+<li><p>作为实体，聚合根具备自己的业务属性，业务行为，业务逻辑</p>
+</li>
+<li><p>聚合之间，是聚合对外的对接人，以聚合根 ID 关联的方式接受外部任务和请求，在上下文内实现聚合之间的业务协同</p>
+</li>
+<li><p>如果需要访问其它聚合的实体，就要先访问聚合根，再导航到聚合内部实体，外部对象不能直接访问聚合内实体</p>
+</li>
+</ul>
+<p>聚合根在聚合内对实体和值对象采用直接对象引用的方式进行组织和协调，聚合根与聚合根之间通过 ID 关联的方式实现聚合之间的协同</p>
+<img src="https://s2.loli.net/2024/08/09/6ZEzCRQ2H7MwXVI.webp" srcset="/img/loading.gif" lazyload alt="juhe" style="zoom:50%;" />
+
+<p><strong>领域事件</strong></p>
+<blockquote>
+<p>领域事件是解耦微服务的关键，表示领域中事件的发生，用于通知其他领域对象跨界限上下文进行协作</p>
+</blockquote>
+<p>领域事件可以切断领域模型之间的强依赖关系，事件发布完成之后，发布方不必关系订阅方事件处理是否成功，这样可以实现领域模型之间的解耦，维护领域模型的独立性和数据的一致性。在领域模型映射到微服务系统架构时，领域事件可以解耦微服务，微服务之间的数据不必要求强一致性，而是基于事件的最终一致性</p>
+<p>领域事件又分为，微服务内与微服务之间两种</p>
+<p>处理流程包括事件构建和发布、事件数据持久化、事件总线、消息中间件、事件接收和处理等</p>
+<img src="https://s2.loli.net/2024/08/09/TWdoufKhZH7tONS.webp" srcset="/img/loading.gif" lazyload alt="lyevent" style="zoom: 50%;" />
+
+<p><strong>领域服务</strong></p>
+<blockquote>
+<p>代表领域中的一些业务逻辑操作，为了解决特定领域问题提供通用的服务</p>
+</blockquote>
+<p>领域服务通常指相对聚焦的底层支撑域&#x2F;通用域服务</p>
+<p>领域服务表示一个无状态的操作，它用于实现特定于某个领域的任务。 </p>
+<p>当领域中的某个操作或转换过程不是实体或值对象的职责时，此时便应该将该操作放在一个单独的接口，即领域服务</p>
+<p><strong>资源库</strong></p>
+<blockquote>
+<p>用于管理领域对象的更新，和持久化的接口</p>
+</blockquote>
+<p>资源库实现了将领域对象的持久化过程，以及从持久化介质中检索对象并还原成领域对象的功能</p>
+<p>资源库封装了底层的数据访问细节，提供一致的接口和抽象，使领域对象的访问和持久化变得统一</p>
+<p><strong>分层架构</strong></p>
+<blockquote>
+<p>DDD 分层架构有一个重要的原则：每层只能与位于其下方的层发生耦合</p>
+</blockquote>
+<p>分层架构可以简单分为两种，即严格分层架构和松散分层架构。</p>
+<p>在<strong>严格分层架构</strong>中，某层只能与位于其直接下方的层发生耦合，而在<strong>松散分层架构</strong>中，则允许某层与它的任意下方层发生耦合。</p>
+<img src="https://s2.loli.net/2024/08/09/X8VdgFtnEixSPZh.webp" srcset="/img/loading.gif" lazyload alt="fcjg" style="zoom: 50%;" />
+
+<p>分层架构的优点和明显：开发人员可以只关注整个结构中的某一层，更易于更新和替换层次的实现。且降低了层与层之间的依赖，有利于标准化，增加了各层逻辑的复用。</p>
+<p>缺点例如：因为增加了中间层，降低了系统的性能，不过可以通过缓存机制来改善，可能会导致级联的修改。这种修改尤其体现在自上而下的方向，不过可以通过依赖倒置来改善。</p>
+<p><strong>六边形架构</strong></p>
+<blockquote>
+<p>实际上它也是一种分层架构，分为内部和外部。六边形架构又名“端口-适配器架构”</p>
+</blockquote>
+<img src="https://s2.loli.net/2024/08/09/Oum2kRfSTFp41Wa.webp" srcset="/img/loading.gif" lazyload alt="lbx" style="zoom:50%;" />
+
+<p>六边形架构将系统分为内部（内部六边形）和外部，内部代表了应用的业务逻辑，外部代表应用的驱动逻辑、基础设施或其他应用。内部通过端口和外部系统通信，端口代表了一定协议，以API呈现。一个端口可能对应多个外部系统，不同的外部系统需要使用不同的适配器，适配器负责对协议进行转换。</p>
+<h2 id="领域建模"><a href="#领域建模" class="headerlink" title="领域建模"></a>领域建模</h2><blockquote>
+<p>领域建模的目的就是：提炼业务知识，形成统一语言，沉淀领域模型</p>
+</blockquote>
+<p>领域建模直接影响着整个设计的成败，需要建立清晰的领域边界，标准规范，统一语言等</p>
+<p>领域建模需要确定的内容有</p>
+<ul>
+<li>领域模型<ul>
+<li>包含领域对象，属性，行为，关系，边界等各个方面，用于描述业务本质</li>
+</ul>
+</li>
+<li>数据模型<ul>
+<li>包括实体关系模型，数据库模型等，用于描述系统的数据结构和关系</li>
+</ul>
+</li>
+<li>架构模型<ul>
+<li>包含整个系统的物理以及逻辑结构，如组件、模块、接口等</li>
+</ul>
+</li>
+</ul>
+<h3 id="事件风暴"><a href="#事件风暴" class="headerlink" title="事件风暴"></a>事件风暴</h3><blockquote>
+<p>是一种快速探索，理解，设计领域模型的方式，通过团队协作以用户的视角探索整个业务流程</p>
+</blockquote>
+<img src="https://s2.loli.net/2024/08/09/1GBzrug5d4CFywM.png" srcset="/img/loading.gif" lazyload alt="sjfb" style="zoom:67%;" />
+
+
+
+<p>一种基于工作坊的DDD实践方法，可以快速发现业务领域中正在发生的事件，指导领域建模及程序开发</p>
+<p><strong>事件：</strong>即事实，即在业务领域中那些已经发生的事实就是事件<br><strong>风暴：</strong>运用头脑风暴会议进行领域分析建模。</p>
+<p><strong>参与者：</strong>需求分析过程所需的人，应该覆盖客户（如有可能参与）、 业务人员、产品人员、架构人员、开发人员和测试人员。需要邀请各种角色，是因为每种角色都是整个项目成功的重要参与方， 而且具有不同的知识背景。有了不同的视角，事件风暴才会更有洞见。</p>
+<p><strong>组织形式：</strong>事件风暴遵循如下的结构：</p>
+<ul>
+<li>列出和业务流程相关的业务事件</li>
+<li>思考业务流程中的异常路径，即何种情况下会导致业务流程出现问题</li>
+<li>围绕着领域事件，思考是谁的何种业务动作导致了这个业务事件</li>
+<li>补充和发现其他的细节</li>
+<li>从前往后再次进行业务流程的走查，发现遗漏</li>
+</ul>
+<p><strong>便利贴</strong>：不同颜色的便利贴表示不同的类型和关注点</p>
+<p><strong>箭头</strong>：表示事务之间的关系，依赖或者先后顺序</p>
+<hr>
+<h3 id="四色建模"><a href="#四色建模" class="headerlink" title="四色建模"></a>四色建模</h3><blockquote>
+<p>利用颜色作为可视化技巧，用于领域模型中表示不同的对象和概念，用颜色更清晰的理解和传达模型的结构关系</p>
+</blockquote>
+<img src="https://s2.loli.net/2024/08/09/1KEUe3fwbYFzR6D.webp" srcset="/img/loading.gif" lazyload alt="ssjm" style="zoom: 67%;" />
+
+
+
+<p>我们将抽象出来的对象分为四种原型（archetype）</p>
+<ul>
+<li>业务关键时刻（Moment-Interval 简称 MI）<ul>
+<li>表示事务在某个时刻或某一段事件内发生的，如一次下单，一次询价等，这样的对象一般有一个起始时间和终止时间，以及一个唯一的标识号，用来唯一的标识这一次用户请求，比如OrderNo</li>
+<li>Ml是最重要的一类对象，因为他是系统业务价值所在，一般用红色表示</li>
+</ul>
+</li>
+<li>角色（Role）<ul>
+<li>抽象了一种参与方式，往往由人或者物来承担，会有相应的责任和权利，一般一个MI会关联多个Role<br>如客户，商家，财务组织等</li>
+<li>这类对象是除moment-interval对象外最重要的一类对象，一般用黄色表示。</li>
+</ul>
+</li>
+<li>人-事-物（Party,Place, or Thing 简称 PPT）<ul>
+<li>表示扮演不同角色的人或者事物，如店铺，商品，账户</li>
+<li>一般用绿色表示</li>
+</ul>
+</li>
+<li>描述（Description 简称 DESC）<ul>
+<li>对上述颜色表示内容进行解释，用于描述建模中产生的数据，事件等</li>
+<li>一般用蓝色表示</li>
+</ul>
+</li>
+</ul>
+<p>概括来说，就是一个什么样的人或物品以某种角色在某个时刻或某段时间内参与某个活动。</p>
+<p>其中：</p>
+<ul>
+<li>什么样的 -&gt; DESC</li>
+<li>人或物品 -&gt; PPT</li>
+<li>角色 -&gt; Role</li>
+<li>某个活动 -&gt; MI</li>
+</ul>
+<p>例如在一个电商场景中的四色建模：</p>
+<p><img src="https://s2.loli.net/2024/08/09/spIg5Ro32wkhPui.webp" srcset="/img/loading.gif" lazyload alt="ssjmdemo"></p>
+<ul>
+<li>首先发现业务关键时刻 ，建立整个领域模型的骨干（MI）</li>
+<li>得到骨干之后，要丰富这个模型，使它更好的描述业务概念，需要补充一些实体对象（PPT）</li>
+<li>在这个基础上，可以进一步抽象这些实体在事务中的角色（Role）</li>
+<li>最后再把一些需要描述的信息放入描述对象（DESC）</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="category-chain-item">学习笔记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9E%B6%E6%9E%84/" class="print-no-link">#架构</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>DDD理解与思考</div>
+      <div>https://kongke7.github.io/2024/08/09/DDD理解与思考/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Kongke</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/31/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="Java并发编程">
+                        <span class="hidden-mobile">Java并发编程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      ©2023-2025 Kongke
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
