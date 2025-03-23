@@ -104,5 +104,5 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: 'git'
-  repository: git@github.com:kongke7/kongke7.github.io.git
+  repository: https://github.com/kongke7/kongke7.github.io.git
   branch: main
